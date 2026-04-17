@@ -5,26 +5,34 @@ import { useAuth } from "../context/AuthContext";
 import { toast } from "react-toastify";
 
 const NAV_LINKS = [
-  { label: "Home",      path: "/" },
-  { label: "About",     path: "/about" },
+  { label: "Home", path: "/" },
+  { label: "About", path: "/about" },
   { label: "Join Beta", path: "/join-beta" },
-  { label: "Contact",   path: "/contact" },
+  { label: "Contact", path: "/contact" },
 ];
 
 /* ── Sun icon ── */
 function SunIcon() {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-         stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <circle cx="12" cy="12" r="5" />
-      <line x1="12" y1="1"  x2="12" y2="3"  />
+      <line x1="12" y1="1" x2="12" y2="3" />
       <line x1="12" y1="21" x2="12" y2="23" />
-      <line x1="4.22" y1="4.22"  x2="5.64" y2="5.64"  />
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
       <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-      <line x1="1"  y1="12" x2="3"  y2="12" />
+      <line x1="1" y1="12" x2="3" y2="12" />
       <line x1="21" y1="12" x2="23" y2="12" />
       <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-      <line x1="18.36" y1="5.64"  x2="19.78" y2="4.22" />
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
     </svg>
   );
 }
@@ -32,8 +40,16 @@ function SunIcon() {
 /* ── Moon icon ── */
 function MoonIcon() {
   return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
-         stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      width="15"
+      height="15"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
     </svg>
   );
@@ -84,8 +100,12 @@ function UserAvatar({ user, onLogout }) {
           transform: open ? "scale(0.94)" : "scale(1)",
           letterSpacing: "0",
         }}
-        onMouseEnter={(e) => { e.currentTarget.style.borderColor = "var(--t2)"; }}
-        onMouseLeave={(e) => { e.currentTarget.style.borderColor = "var(--border2)"; }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.borderColor = "var(--t2)";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.borderColor = "var(--border2)";
+        }}
       >
         {initial}
       </button>
@@ -114,10 +134,23 @@ function UserAvatar({ user, onLogout }) {
               borderBottom: "1px solid var(--border)",
             }}
           >
-            <div style={{ fontSize: "0.82rem", fontWeight: "600", color: "var(--t1)" }}>
+            <div
+              style={{
+                fontSize: "0.82rem",
+                fontWeight: "600",
+                color: "var(--t1)",
+              }}
+            >
               {user?.username || user?.userName}
             </div>
-            <div style={{ fontSize: "0.74rem", color: "var(--t3)", marginTop: "2px", wordBreak: "break-all" }}>
+            <div
+              style={{
+                fontSize: "0.74rem",
+                color: "var(--t3)",
+                marginTop: "2px",
+                wordBreak: "break-all",
+              }}
+            >
               {user?.email}
             </div>
           </div>
@@ -125,7 +158,10 @@ function UserAvatar({ user, onLogout }) {
           {/* Sign out */}
           <button
             id="nav-signout-btn"
-            onClick={() => { setOpen(false); onLogout(); }}
+            onClick={() => {
+              setOpen(false);
+              onLogout();
+            }}
             style={{
               width: "100%",
               padding: "10px 14px",
@@ -165,15 +201,19 @@ function UserAvatar({ user, onLogout }) {
    NAVBAR
 ───────────────────────────────────────────────────────────── */
 function Navbar() {
-  const location  = useLocation();
-  const navigate  = useNavigate();
+  const location = useLocation();
+  const navigate = useNavigate();
   const { dark, toggle } = useTheme();
   const { isLoggedIn, user, logout } = useAuth();
+  const isDebateRoute = location.pathname === "/debate";
+  const visibleNavLinks = isLoggedIn
+    ? NAV_LINKS.filter((link) => link.path !== "/join-beta")
+    : NAV_LINKS;
 
   const handleLogout = () => {
     logout();
     toast.info("You've been signed out.");
-    navigate("/");   // go to Home, not /login
+    navigate("/"); // go to Home, not /login
   };
 
   return (
@@ -210,9 +250,8 @@ function Navbar() {
 
       {/* Right side */}
       <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-
         {/* Nav links */}
-        {NAV_LINKS.map((link) => {
+        {visibleNavLinks.map((link) => {
           const isActive = location.pathname === link.path;
           return (
             <Link
@@ -227,7 +266,9 @@ function Navbar() {
                 textDecoration: "none",
                 color: isActive ? "var(--t1)" : "var(--t2)",
                 backgroundColor: isActive ? "var(--bg2)" : "transparent",
-                border: isActive ? "1px solid var(--border)" : "1px solid transparent",
+                border: isActive
+                  ? "1px solid var(--border)"
+                  : "1px solid transparent",
               }}
               className="nav-link"
             >
@@ -238,8 +279,30 @@ function Navbar() {
 
         {/* ── Auth section ──────────────────────────────── */}
         {isLoggedIn ? (
-          /* Logged in → show avatar with dropdown */
-          <UserAvatar user={user} onLogout={handleLogout} />
+          /* Logged in → show debate CTA + avatar */
+          <>
+            <Link
+              id="nav-debate-btn"
+              to="/debate"
+              style={{
+                padding: "6px 16px",
+                borderRadius: "8px",
+                fontSize: "0.82rem",
+                fontWeight: 600,
+                textDecoration: "none",
+                color: "var(--btn-text)",
+                backgroundColor: isDebateRoute
+                  ? "var(--btn-hover)"
+                  : "var(--btn-bg)",
+                border: "1px solid transparent",
+                marginLeft: "8px",
+              }}
+              className="nav-login"
+            >
+              Debate with AI
+            </Link>
+            <UserAvatar user={user} onLogout={handleLogout} />
+          </>
         ) : (
           /* Logged out → Show Sign up + Login */
           <>

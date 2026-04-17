@@ -8,6 +8,8 @@ import JoinBeta from "./pages/JoinBeta";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
+import DebatePage from "./pages/DebatePage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 import { AuthProvider } from "./context/AuthContext";
 
@@ -29,8 +31,8 @@ function App() {
         >
           {/* Navbar is hidden on /login and /dashboard for a clean full-page layout */}
           <Routes>
-            <Route path="/login"     element={<Login />} />
-            <Route path="/signup"    element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
             <Route path="/dashboard" element={<Dashboard />} />
 
             {/* Main app routes — all wrapped with Navbar */}
@@ -40,10 +42,18 @@ function App() {
                 <>
                   <Navbar />
                   <Routes>
-                    <Route path="/"          element={<Home />} />
-                    <Route path="/about"     element={<About />} />
-                    <Route path="/contact"   element={<Contact />} />
+                    <Route path="/" element={<Home />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/contact" element={<Contact />} />
                     <Route path="/join-beta" element={<JoinBeta />} />
+                    <Route
+                      path="/debate"
+                      element={
+                        <ProtectedRoute>
+                          <DebatePage />
+                        </ProtectedRoute>
+                      }
+                    />
                   </Routes>
                 </>
               }

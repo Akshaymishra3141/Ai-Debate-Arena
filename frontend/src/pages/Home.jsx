@@ -1,12 +1,21 @@
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const features = [
   {
     num: "01",
     title: "AI Opponent",
     icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-           strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <circle cx="12" cy="8" r="4" />
         <path d="M6 20v-2a6 6 0 0 1 12 0v2" />
         <path d="M18 8h2M18 12h2" />
@@ -18,8 +27,16 @@ const features = [
     num: "02",
     title: "Live Scoring",
     icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-           strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
       </svg>
     ),
@@ -29,8 +46,16 @@ const features = [
     num: "03",
     title: "Topic Library",
     icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-           strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
         <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
       </svg>
@@ -41,11 +66,19 @@ const features = [
     num: "04",
     title: "Leaderboard",
     icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-           strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <line x1="18" y1="20" x2="18" y2="10" />
         <line x1="12" y1="20" x2="12" y2="4" />
-        <line x1="6"  y1="20" x2="6"  y2="14" />
+        <line x1="6" y1="20" x2="6" y2="14" />
       </svg>
     ),
     desc: "Compete with peers. See who the top debater in your class actually is.",
@@ -183,6 +216,7 @@ const s = {
 
 function Home() {
   const navigate = useNavigate();
+  const { isLoggedIn } = useAuth();
 
   return (
     <div className="animate-fadeUp">
@@ -195,7 +229,16 @@ function Home() {
 
         <h1 style={s.h1}>
           <span style={{ display: "block", marginBottom: "8px" }}>Argue</span>
-          <span style={{ display: "block", color: "var(--t2)", fontWeight: 700, marginBottom: "8px" }}>Think</span>
+          <span
+            style={{
+              display: "block",
+              color: "var(--t2)",
+              fontWeight: 700,
+              marginBottom: "8px",
+            }}
+          >
+            Think
+          </span>
           <span style={{ display: "block" }}>Win</span>
         </h1>
 
@@ -205,14 +248,25 @@ function Home() {
         </p>
 
         <div style={s.btnRow}>
-          <button
-            id="cta-primary"
-            onClick={() => navigate("/join-beta")}
-            style={s.btnPrimary}
-            className="btn-primary-hover"
-          >
-            Reserve Your Spot
-          </button>
+          {isLoggedIn ? (
+            <button
+              id="cta-debate"
+              onClick={() => navigate("/debate")}
+              style={s.btnPrimary}
+              className="btn-primary-hover"
+            >
+              Debate with AI
+            </button>
+          ) : (
+            <button
+              id="cta-login-debate"
+              onClick={() => navigate("/login")}
+              style={s.btnGhost}
+              className="btn-ghost-hover"
+            >
+              Login to Debate
+            </button>
+          )}
           <button
             id="cta-secondary"
             onClick={() => navigate("/about")}
@@ -226,10 +280,16 @@ function Home() {
 
       {/* ── FEATURES ─────────────────────────── */}
       <div style={s.section}>
-        <div style={s.sectionLabel} className="text-center">Features</div>
+        <div style={s.sectionLabel} className="text-center">
+          Features
+        </div>
         <div style={s.grid} className="stagger">
           {features.map((f) => (
-            <div key={f.num} style={s.card} className="feature-card animate-fadeUp">
+            <div
+              key={f.num}
+              style={s.card}
+              className="feature-card animate-fadeUp"
+            >
               <div style={s.cardNum}>{f.num}</div>
               <div style={s.cardIcon}>{f.icon}</div>
               <h3 style={s.cardTitle}>{f.title}</h3>
