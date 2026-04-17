@@ -1,0 +1,194 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+@import "tailwindcss";
+
+/* ──────────────────────────────────────────────
+   DESIGN TOKENS — Light Mode (default)
+────────────────────────────────────────────── */
+:root {
+  --bg:        #f8f9fb;
+  --bg2:       #f1f2f5;
+  --card:      #ffffff;
+  --card2:     #f4f5f7;
+  --border:    #e2e4e8;
+  --border2:   #d0d3d8;
+
+  --t1:        #1f1f1f;
+  --t2:        #5a5c61;
+  --t3:        #9a9ca2;
+
+  --btn-bg:    #1f1f1f;
+  --btn-text:  #ffffff;
+  --btn-hover: #3a3a3a;
+
+  --acc:       #3a3a3a;
+
+  --shadow-sm: 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
+}
+
+/* ──────────────────────────────────────────────
+   DESIGN TOKENS — Dark Mode
+────────────────────────────────────────────── */
+.dark {
+  --bg:        #0f0f10;
+  --bg2:       #161618;
+  --card:      #1a1a1c;
+  --card2:     #222224;
+  --border:    #2a2a2d;
+  --border2:   #3a3a3d;
+
+  --t1:        #e5e5e5;
+  --t2:        #8a8b91;
+  --t3:        #55565a;
+
+  --btn-bg:    #e5e5e5;
+  --btn-text:  #0f0f10;
+  --btn-hover: #ffffff;
+
+  --acc:       #c8c8cb;
+
+  --shadow-sm: 0 1px 4px rgba(0,0,0,0.30);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.40);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.50);
+}
+
+/* ──────────────────────────────────────────────
+   BASE RESET & GLOBALS
+────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg);
+  color: var(--t1);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  line-height: 1.6;
+}
+
+/* ──────────────────────────────────────────────
+   TYPOGRAPHY UTILITIES
+────────────────────────────────────────────── */
+.text-t1   { color: var(--t1); }
+.text-t2   { color: var(--t2); }
+.text-t3   { color: var(--t3); }
+.text-acc  { color: var(--acc); }
+
+/* ──────────────────────────────────────────────
+   BACKGROUND UTILITIES
+────────────────────────────────────────────── */
+.bg-bg     { background-color: var(--bg); }
+.bg-bg2    { background-color: var(--bg2); }
+.bg-card   { background-color: var(--card); }
+.bg-card2  { background-color: var(--card2); }
+
+/* ──────────────────────────────────────────────
+   BORDER UTILITIES
+────────────────────────────────────────────── */
+.border-base  { border: 1px solid var(--border); }
+.border-base2 { border: 1px solid var(--border2); }
+
+/* ──────────────────────────────────────────────
+   FORM ELEMENTS
+────────────────────────────────────────────── */
+input, select, textarea {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--t1);
+  font-family: "Inter", sans-serif;
+  font-size: 0.875rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+  appearance: none;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--t3);
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--border2);
+  box-shadow: 0 0 0 3px rgba(90,92,97,0.10);
+}
+
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%239a9ca2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+/* Select options in dark mode */
+.dark select option {
+  background-color: var(--card);
+  color: var(--t1);
+}
+
+/* ──────────────────────────────────────────────
+   ANIMATIONS
+────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes subtlePulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+.animate-fadeUp {
+  animation: fadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.4s ease both;
+}
+
+.animate-pulse2 {
+  animation: subtlePulse 2.4s ease-in-out infinite;
+}
+
+/* Staggered children */
+.stagger > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger > *:nth-child(2) { animation-delay: 0.12s; }
+.stagger > *:nth-child(3) { animation-delay: 0.19s; }
+.stagger > *:nth-child(4) { animation-delay: 0.26s; }
+
+/* ──────────────────────────────────────────────
+   TRANSITIONS (global)
+────────────────────────────────────────────── */
+a, button { transition: all 0.2s ease; }
+
+/* Smooth theme transition on all elements */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color, box-shadow;
+  transition-duration: 0.25s;
+  transition-timing-function: ease;
+}
